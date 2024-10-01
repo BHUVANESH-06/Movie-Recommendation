@@ -7,9 +7,7 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config()
 
-app.use(cors({
-    origin: 'https://movie-recommendation-system-frontend-if72.onrender.com'
-}));
+app.use(cors());
 
 app.use(express.json());
 
@@ -25,7 +23,7 @@ fs.createReadStream(moviesCsvPath)
     });
 
 const runPythonScript = (scriptPath, arg, res) => {
-    const command = `python3 ${scriptPath} "${arg}"`;
+    const command = `python ${scriptPath} "${arg}"`;
     console.log(command)
 
     exec(command, (error, stdout, stderr) => {
@@ -61,7 +59,6 @@ app.get('/api/top', (req, res) => {
         return res.status(400).json({ error: 'Genre is required' });
     }
     
-    console.log(`Running Script at:${pythonScriptPath}`)
     const pythonScriptPath = path.join(__dirname, 'demographic.py');
     runPythonScript(pythonScriptPath, genre, res);
 });
