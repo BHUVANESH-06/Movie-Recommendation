@@ -52,7 +52,6 @@ app.get('/api/recommend', (req, res) => {
 
 app.get('/api/top', (req, res) => {
     const genre = req.query.genre;
-
     if (!genre) {
         return res.status(400).json({ error: 'Genre is required' });
     }
