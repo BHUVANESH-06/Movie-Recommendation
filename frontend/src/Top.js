@@ -18,7 +18,7 @@ function Top({ genre }) {
     useEffect(() => {
         const getRecommendations = async () => {
             try {
-                const response = await axios.get('https://movie-recommendation-system-ag2i.onrender.com/api/top', {
+                const response = await axios.get('http://localhost:5003/api/top', {
                     params: { genre }
                 });
                 const movieTitles = response.data;
