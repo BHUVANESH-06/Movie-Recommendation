@@ -7,7 +7,9 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config()
 
-app.use(cors());
+app.use(cors({
+    origin: 'https://movie-recommendation-frontend.onrender.com'
+}));
 
 app.use(express.json());
 
