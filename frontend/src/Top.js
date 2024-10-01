@@ -9,7 +9,8 @@ const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 function Top({ genre }) {
     const [recommendations, setRecommendations] = useState([]);
     const navigate = useNavigate();
-
+    
+    const [loading, setLoading] = useState(true);
     const handleMovieClick = (movieTitle) => {
         navigate(`/related/${encodeURIComponent(movieTitle)}`);
     };
@@ -31,6 +32,8 @@ function Top({ genre }) {
             } catch (error) {
                 console.error('Error fetching recommendations:', error);
                 setRecommendations([]);
+            }finally{
+                setLoading(false);
             }
         };
 
@@ -68,19 +71,23 @@ function Top({ genre }) {
     return (
         <div>
             <div className='container'>
-                {recommendations.length > 0 ? (
-                    recommendations.map((rec, index) => (
-                        <div key={index} className='row' onClick={() => handleMovieClick(rec.title)}>
-                            {rec.poster ? (
-                                <img src={rec.poster} alt={rec.title} className='poster' />
-                            ) : (
-                                <div>No image available</div>
-                            )}
-                            <p>{rec.title}</p>
-                        </div>
-                    ))
-                ) : (
-                    <div>No recommendations available</div>
+                {loading ? (
+                    <p>Loading....</p>
+                    ) : (
+                        recommendations.length > 0 ? (
+                            recommendations.map((rec, index) => (
+                                <div key={index} className='row' onClick={() => handleMovieClick(rec.title)}>
+                                    {rec.poster ? (
+                                        <img src={rec.poster} alt={rec.title} className='poster' />
+                                    ) : (
+                                        <div>No image available</div>
+                                    )}
+                                    <p>{rec.title}</p>
+                                </div>
+                            ))
+                        ) : (
+                            <div>No recommendations available</div>
+                        )
                 )}
             </div>
         </div>

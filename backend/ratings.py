@@ -1,9 +1,12 @@
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 import sys
+import os
 
-df1 = pd.read_csv(r'backend\ratings.csv')
-df2 = pd.read_csv(r'backend\movies.csv')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+df1 = pd.read_csv(os.path.join(BASE_DIR,  'ratings.csv'))
+df2 = pd.read_csv(os.path.join(BASE_DIR, 'movies.csv'))
 
 def clean_ratings(df):
     df['rating'] = pd.to_numeric(df['rating'], errors='coerce')

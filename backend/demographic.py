@@ -1,8 +1,12 @@
 import pandas as pd
 import numpy as np
 import sys
-df1 = pd.read_csv(r'backend\tmdb_5000_credits.csv')
-df2 = pd.read_csv(r'backend\movies.csv')
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+df1 = pd.read_csv(os.path.join(BASE_DIR,'tmdb_5000_credits.csv'))
+df2 = pd.read_csv(os.path.join(BASE_DIR,'movies.csv'))
 
 
 df1.columns = ['id', 'tittle', 'cast', 'crew']
