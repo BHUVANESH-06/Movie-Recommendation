@@ -45,7 +45,7 @@ const runPythonScript = (scriptPath, arg, res) => {
 
 app.get('/api/recommend', (req, res) => {
     const movieTitle = req.query.title;
-
+    console.log(`Received request for recommendations for title: ${movieTitle}`); 
     if (!movieTitle) {
         return res.status(400).json({ error: 'Movie title is required' });
     }
@@ -56,7 +56,8 @@ app.get('/api/recommend', (req, res) => {
 
 app.get('/api/top', (req, res) => {
     const genre = req.query.genre;
-    console.log("Hi")
+    console.log(`Received request for top movies in genre: ${genre}`);
+
     if (!genre) {
         return res.status(400).json({ error: 'Genre is required' });
     }
