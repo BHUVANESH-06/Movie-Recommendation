@@ -27,7 +27,6 @@ fs.createReadStream(moviesCsvPath)
 const runPythonScript = (scriptPath, arg, res) => {
     const command = `python3 ${scriptPath} "${arg}"`;
     console.log(command)
-    console.log(command);
 
     exec(command, (error, stdout, stderr) => {
         if (error) {
@@ -60,7 +59,8 @@ app.get('/api/top', (req, res) => {
     if (!genre) {
         return res.status(400).json({ error: 'Genre is required' });
     }
-
+    
+    console.log(`Running Script at:${pythonScriptPath}`)
     const pythonScriptPath = path.join(__dirname, 'demographic.py');
     runPythonScript(pythonScriptPath, genre, res);
 });
