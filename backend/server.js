@@ -6,11 +6,14 @@ const app = express();
 const cors = require('cors');
 const path = require('path');
 
-app.use(cors());
+app.use(cors({
+    origin: 'https://movie-recommendation-system-frontend-if72.onrender.com'
+}));
+
 app.use(express.json());
 
 let movies = [];
-const moviesCsvPath = path.join(__dirname,'movies.csv');
+const moviesCsvPath = path.join(__dirname, 'movies.csv');
 fs.createReadStream(moviesCsvPath)
     .pipe(csv())
     .on('data', (row) => {
@@ -21,7 +24,7 @@ fs.createReadStream(moviesCsvPath)
     });
 
 const runPythonScript = (scriptPath, arg, res) => {
-    const command = `python ${scriptPath} "${arg}"`;
+    const command = `python3 ${scriptPath} "${arg}"`;
     console.log(command);
 
     exec(command, (error, stdout, stderr) => {
@@ -46,7 +49,7 @@ app.get('/api/recommend', (req, res) => {
         return res.status(400).json({ error: 'Movie title is required' });
     }
 
-    const pythonScriptPath = 'backend/recommendations.py';
+    const pythonScriptPath = path.join(__dirname, 'backend', 'recommendations.py');
     runPythonScript(pythonScriptPath, movieTitle, res);
 });
 
@@ -56,7 +59,7 @@ app.get('/api/top', (req, res) => {
         return res.status(400).json({ error: 'Genre is required' });
     }
 
-    const pythonScriptPath = 'backend/demographic.py';
+    const pythonScriptPath = path.join(__dirname, 'backend', 'demographic.py');
     runPythonScript(pythonScriptPath, genre, res);
 });
 
@@ -102,7 +105,7 @@ app.get('/api/collaborative-recommend', (req, res) => {
         return res.status(400).json({ error: 'Movie title is required' });
     }
 
-    const pythonScriptPath = 'backend/ratings.py';
+    const pythonScriptPath = path.join(__dirname, 'backend', 'ratings.py');
     runPythonScript(pythonScriptPath, `${movieTitle}`, res); 
 });
 
