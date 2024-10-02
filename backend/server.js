@@ -25,13 +25,13 @@ fs.createReadStream(moviesCsvPath)
     });
 
 const runPythonScript = (scriptPath, arg, res) => {
-    const command = `python3 ${scriptPath} "${arg}"`;
+    const command = `python ${scriptPath} "${arg}"`;
     console.log(command)
 
     exec(command, (error, stdout, stderr) => {
         if (error) {
             console.error(`Error executing script: ${stderr}`);
-            console.log(`Script output: ${stdout}`); // Log the script's output for debugging
+            console.log(`Script output: ${stdout}`);
             return res.status(500).json({ error: 'Failed to execute script' });
         }
 
