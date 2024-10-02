@@ -28,7 +28,7 @@ fs.createReadStream(moviesCsvPath)
     });
 
 const runPythonScript = (scriptPath, arg, res) => {
-    const command = `python ${scriptPath} "${arg}"`;
+    const command = `python3 ${scriptPath} "${arg}"`;
     console.log(command)
 
     exec(command, (error, stdout, stderr) => {
