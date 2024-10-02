@@ -9,8 +9,8 @@ require('dotenv').config()
 
 app.use(cors({
     origin: 'https://movie-recommendation-frontend.onrender.com',
-    methods: ['GET', 'POST'], // Allow necessary HTTP methods
-    credentials: true, // If needed for cookies or authentication
+    methods: ['GET', 'POST'], 
+    credentials: true,
 }));
 
 
@@ -27,25 +27,27 @@ fs.createReadStream(moviesCsvPath)
         console.log('CSV file successfully processed');
     });
 
-const runPythonScript = (scriptPath, arg, res) => {
-    const command = `python3 ${scriptPath} "${arg}"`;
-    console.log(command)
-
-    exec(command, (error, stdout, stderr) => {
-        if (error) {
-            console.error(`Error executing script: ${stderr}`);
-            console.log(`Script output: ${stdout}`);
-            return res.status(500).json({ error: 'Failed to execute script' });
-        }
-
-        const output = stdout
-            .split('\n')
-            .map(line => line.trim())
-            .filter(line => line !== '');
-        console.log(output);
-        res.json(output);
-    });
-};
+    const runPythonScript = (scriptPath, arg, res) => {
+        const command = `python3 ${scriptPath} "${arg}"`;
+        console.log(command);
+    
+        exec(command, (error, stdout, stderr) => {
+            if (error) {
+                console.error(`Error executing script: ${stderr}`);
+                console.error(`Error object:`, error); // Log the error object for more context
+                console.log(`Script output: ${stdout}`);
+                return res.status(500).json({ error: `Failed to execute script: ${stderr}` });
+            }
+    
+            const output = stdout
+                .split('\n')
+                .map(line => line.trim())
+                .filter(line => line !== '');
+            console.log(output);
+            res.json(output);
+        });
+    };
+    
 
 app.get('/api/recommend', (req, res) => {
     const movieTitle = req.query.title;
