@@ -8,8 +8,11 @@ const path = require('path');
 require('dotenv').config()
 
 app.use(cors({
-    origin: 'https://movie-recommendation-frontend.onrender.com'
+    origin: 'https://movie-recommendation-frontend.onrender.com',
+    methods: ['GET', 'POST'], // Allow necessary HTTP methods
+    credentials: true, // If needed for cookies or authentication
 }));
+
 
 app.use(express.json());
 
